@@ -4,6 +4,7 @@ import { SendNotificationUseCase } from 'src/app/use-cases/send-notification-use
 import { NotificationViewModel } from '../view-models/notification-view-model';
 import { CancelNotificationUseCase } from '@app/use-cases/cancel-notification-use-case';
 import { ReadNotificationUseCase } from '@app/use-cases/read-notification-use-case';
+import { UnreadNotificationUseCase } from '@app/use-cases/unread-notification-use-case';
 
 @Controller('notifications')
 export class NotificationsController {
@@ -11,6 +12,7 @@ export class NotificationsController {
     private sendNotificationUseCase: SendNotificationUseCase,
     private cancelNotificationUseCase: CancelNotificationUseCase,
     private readNotificationUseCase: ReadNotificationUseCase,
+    private unreadNotificationUseCase: UnreadNotificationUseCase,
   ) {}
 
   @Patch(':id/cancel')
@@ -21,6 +23,11 @@ export class NotificationsController {
   @Patch(':id/read')
   async read(@Param('id') id: string) {
     await this.readNotificationUseCase.execute({ notificationId: id });
+  }
+
+  @Patch(':id/unread')
+  async unread(@Param('id') id: string) {
+    await this.unreadNotificationUseCase.execute({ notificationId: id });
   }
 
   @Post()
